@@ -4,13 +4,13 @@
 
 ## Usage
 
+`cargo add volcengine-rs`
+
 ```rust
 use std::collections::BTreeMap;
 
 use serde::Deserialize;
 use serde_json::json;
-
-mod volce;
 
 #[derive(Deserialize, Debug)]
 struct Text2ImgData {
@@ -53,7 +53,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         "return_url":true,
     });
 
-    let result = volce::send_request::<Text2Img>(
+    let result = volcengine-rs::send_request::<Text2Img>(
         access_key,
         secret_key,
         endpoint,
