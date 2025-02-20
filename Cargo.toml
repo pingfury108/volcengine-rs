@@ -1,6 +1,6 @@
 [package]
 name = "volcengine-rs"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 description = "Volcengine API SDK"
 categories = ["authentication", "network-programming"]
