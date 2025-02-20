@@ -1,0 +1,22 @@
+[package]
+name = "volcengine-rs"
+version = "0.1.0"
+edition = "2021"
+description = "Volcengine API SDK"
+categories = ["authentication", "network-programming"]
+license = "MIT/Apache-2.0"
+readme = "README.md"
+homepage = "https://github.com/AllenDang/volcengine-rs"
+repository = "https://github.com/AllenDang/volcengine-rs"
+keywords = ["volcengine", "sdk"]
+exclude = ["/.github", ".gitignore"]
+rust-version = "1.83.0"
+
+[dependencies]
+chrono = "0.4.39"
+hex = "0.4.3"
+hmac = "0.12.1"
+reqwest = { version = "0.12.12", features = ["json"] }
+serde = { version = "1.0.217", features = ["derive"] }
+serde_json = "1.0.139"
+sha2 = "0.10.8"
