@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.2](https://github.com/AllenDang/volcengine-rs/compare/v0.1.1...v0.1.2) - 2025-02-20
+
+### Other
+
+- Delete redundant content in CHANGELOG
+
 ## [0.1.1](https://github.com/AllenDang/volcengine-rs/compare/v0.1.0...v0.1.1) - 2025-02-20
 
 ### Other
