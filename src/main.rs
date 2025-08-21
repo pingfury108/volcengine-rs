@@ -42,8 +42,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     };
 
     // Load credentials from environment variables
-    let access_key = get_env_var("VOLCENGINE_ACCESS_KEY");
-    let secret_key = get_env_var("VOLCENGINE_SECRET_KEY");
+    let access_key = get_env_var("VOLC_ACCESS_KEY");
+    let secret_key = get_env_var("VOLC_SECRET_KEY");
 
     let cli = Cli::parse();
 
