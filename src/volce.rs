@@ -36,6 +36,7 @@ fn signature_v4(
     region: &str,
     service: &str,
     method: &str,
+    content_type: &str,
     req_query: &str,
     req_body: &str,
 ) -> Result<(String, String), Box<dyn std::error::Error>> {
@@ -49,7 +50,6 @@ fn signature_v4(
         hex::encode(hasher.finalize())
     };
 
-    let content_type = "application/json";
     let signed_headers = "content-type;host;x-content-sha256;x-date";
 
     let canonical_headers = format!(
@@ -58,7 +58,11 @@ fn signature_v4(
     );
 
     let canonical_request = format!(
-        "{}\n/\n{}\n{}\n{}\n{}",
+        "{}
+/\n{}
+{}
+{}
+{}",
         method, req_query, canonical_headers, signed_headers, payload_hash
     );
 
@@ -66,7 +70,10 @@ fn signature_v4(
     let credential_scope = format!("{}/{}/{}/request", datestamp, region, service);
 
     let string_to_sign = format!(
-        "{}\n{}\n{}\n{}",
+        "{}
+{}
+{}
+{}",
         algorithm,
         current_date,
         credential_scope,
@@ -102,11 +109,10 @@ pub async fn send_request<T: DeserializeOwned>(
     method: &str,
     content_type: &str,
     query_params: BTreeMap<&str, &str>,
-    body_params: serde_json::Value,
+    body_str: String,
 ) -> Result<T, Box<dyn std::error::Error>> {
     let client = Client::new();
     let formatted_query = format_query(&query_params);
-    let formatted_body = body_params.to_string();
 
     let host = get_host(endpoint)?;
 
@@ -117,11 +123,12 @@ pub async fn send_request<T: DeserializeOwned>(
         region,
         service,
         method,
+        content_type,
         &formatted_query,
-        &formatted_body,
+        &body_str,
     )?;
 
-    let payload_hash = hex::encode(Sha256::digest(formatted_body.as_bytes()));
+    let payload_hash = hex::encode(Sha256::digest(body_str.as_bytes()));
 
     let request_url = format!("{}?{}", endpoint, formatted_query);
 
@@ -131,7 +138,7 @@ pub async fn send_request<T: DeserializeOwned>(
         .header("Authorization", authorization_header)
         .header("X-Content-Sha256", payload_hash)
         .header("Content-Type", content_type)
-        .body(formatted_body)
+        .body(body_str)
         .send()
         .await?;
 
