@@ -88,7 +88,7 @@ impl<'a> VisualClient<'a> {
 // OCR Normal Data Structures
 // =================================================
 
-#[derive(Serialize, Debug, Default)]
+#[derive(Serialize, Deserialize, Debug, Default)]
 pub struct OcrNormalRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub image_base64: Option<String>,
@@ -104,7 +104,7 @@ pub struct OcrNormalRequest {
     pub half_to_full: Option<String>,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct OcrNormalResponse {
     pub code: i64,
     pub data: Option<OcrNormalData>,
@@ -113,7 +113,7 @@ pub struct OcrNormalResponse {
     pub time_elapsed: String,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct OcrNormalData {
     pub line_texts: Vec<String>,
     pub line_rects: Vec<RectInfo>,
@@ -122,7 +122,7 @@ pub struct OcrNormalData {
     pub polygons: Vec<Vec<Vec<i32>>>,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct RectInfo {
     pub x: f32,
     pub y: f32,
@@ -130,7 +130,7 @@ pub struct RectInfo {
     pub height: f32,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct CharInfo {
     pub x: f32,
     pub y: f32,
@@ -144,7 +144,7 @@ pub struct CharInfo {
 // Text to Image Data Structures
 // =================================================
 
-#[derive(Serialize, Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct TextToImageRequest {
     pub req_key: String,
     pub prompt: String,
@@ -158,14 +158,14 @@ pub struct TextToImageRequest {
     pub return_url: bool,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct TextToImageResponse {
     pub code: i64,
     pub message: String,
     pub data: Option<TextToImageData>,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct TextToImageData {
     pub image_urls: Vec<String>,
 }
